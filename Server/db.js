@@ -11,11 +11,6 @@ try {
 // sequelize will auto-generate createdAt and updatedAt for all tables, so
 // created_on was removed
 const User = sequelize.define('User', {
-  id: {
-    type: DataTypes.INTEGER,
-    primaryKey: true,
-    autoIncrement: true
-  },
   user_uid: {
     type: DataTypes.STRING,
     allowNull: false
@@ -26,7 +21,6 @@ const User = sequelize.define('User', {
   },
   profile_picture: {
     type: DataTypes.STRING,
-    allowNull: true
   },
   email: {
     type: DataTypes.STRING,
@@ -38,11 +32,9 @@ const User = sequelize.define('User', {
   },
   weight: {
     type: DataTypes.DOUBLE,
-    allowNull: true
   },
   height: {
     type: DataTypes.INTEGER,
-    allowNull: true
   },
   type: {
     type: DataTypes.STRING,
@@ -58,16 +50,10 @@ const User = sequelize.define('User', {
   },
   birthday: { //changed from age to birthday
     type: DataTypes.DATEONLY,
-    allowNull: true
   },
 });
 
 const Invite = sequelize.define('Invite', {
-  id: {
-    type: DataTypes.INTEGER,
-    primaryKey: true,
-    autoIncrement: true
-  },
   trainer_uid: {
     type: DataTypes.STRING,
     allowNull: false
@@ -78,12 +64,7 @@ const Invite = sequelize.define('Invite', {
   },
 });
 
-const Workout_Exercise = sequelize.define('Workout_Exercise', {
-  id: {
-    type: DataTypes.INTEGER,
-    primaryKey: true,
-    autoIncrement: true
-  },
+const WorkoutExercise = sequelize.define('Workout_Exercise', {
   workout_id: {
     type: DataTypes.STRING,
     allowNull: false
@@ -95,11 +76,6 @@ const Workout_Exercise = sequelize.define('Workout_Exercise', {
 });
 
 const Workout = sequelize.define('Workout', {
-  id: {
-    type: DataTypes.INTEGER,
-    primaryKey: true,
-    autoIncrement: true
-  },
   workout_id: {
     type: DataTypes.STRING,
     allowNull: false
@@ -111,11 +87,6 @@ const Workout = sequelize.define('Workout', {
 });
 
 const Exercise = sequelize.define('Exercise', {
-  id: {
-    type: DataTypes.INTEGER,
-    primaryKey: true,
-    autoIncrement: true
-  },
   trainer_uid: {
     type: DataTypes.STRING,
     allowNull: false
@@ -134,7 +105,6 @@ const Exercise = sequelize.define('Exercise', {
   },
   media: {
     type: DataTypes.STRING,
-    allowNull: true
   },
   muscle_group: {
     type: DataTypes.STRING,
@@ -142,8 +112,7 @@ const Exercise = sequelize.define('Exercise', {
   },
   benefits: {
     type: DataTypes.STRING,
-    allowNull: true
   },
 });
 
-module.exports = { User, Invite, Workout_Exercise, Workout, Exercise };
+module.exports = { User, Invite, WorkoutExercise, Workout, Exercise };
