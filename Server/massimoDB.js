@@ -42,12 +42,12 @@ exports.Measurement = sequelize.define('Measurement', {
   quad: {
     type: DateTypes.INTEGER
   },
-  calves: {
+  calf: {
     type: DateTypes.INTEGER
   },
 });
 
-exports.ClientPlans = sequelize.define('client_plan', {
+exports.ClientPlans = sequelize.define('Client_Plan', {
   client_uid: {
     type: DataTypes.STRING,
     allowNull: false
@@ -62,7 +62,7 @@ exports.ClientPlans = sequelize.define('client_plan', {
   },
 });
 
-exports.Appointments = sequelize.define('appointment', {
+exports.Appointments = sequelize.define('Appointment', {
   meeting_id: {
     type: DataTypes.STRING,
     allowNull: false
@@ -85,7 +85,7 @@ exports.Appointments = sequelize.define('appointment', {
   },
 });
 
-exports.Plans = define('plan', {
+exports.Plans = define('Plan', {
   details: {
     type: DataTypes.JSON,
     allowNull: false
@@ -101,7 +101,7 @@ exports.Plans = define('plan', {
 });
 
 
-exports.Tracker = define('tracker', {
+exports.Tracker = define('Tracker', {
   client_uid: {
     type: DataTypes.STRING,
     allowNull: false
@@ -124,7 +124,7 @@ exports.Tracker = define('tracker', {
   },
 });
 
-exports.TrainerClients = define('trainer_client', {
+exports.TrainerClients = define('Trainer_Client', {
   trainer_uid: {
     type: DataTypes.STRING,
     allowNull: false
