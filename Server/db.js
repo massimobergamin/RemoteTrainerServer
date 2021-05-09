@@ -1,15 +1,14 @@
-const { Sequelize } = require('sequelize');
-const sequelize = new Sequelize('postgres://pkxgtjwuztfiwc:d47be1eb7435e73c1d1b02177fa7ba64214a5f8766de8d07415def5f5f273fce@ec2-35-174-35-242.compute-1.amazonaws.com:5432/defckmt2cf9m5i') // input heroku connection string
+const { Sequelize, DataTypes } = require('sequelize');
+// const sequelize = new Sequelize('postgres://pkxgtjwuztfiwc:d47be1eb7435e73c1d1b02177fa7ba64214a5f8766de8d07415def5f5f273fce@ec2-35-174-35-242.compute-1.amazonaws.com:5432/defckmt2cf9m5i') // input heroku connection string
+
+const sequelize = new Sequelize('postgres://MassimoBergamin@127.0.0.1:5432/RemoteTrainer2') // input heroku connection string
 
 try {
-  await sequelize.authenticate();
-  console.log('Connection has been established successfully.');
+  sequelize.authenticate().then(console.log('Connection has been established successfully.'));
 } catch (error) {
   console.error('Unable to connect to the database:', error);
 }
 
-// sequelize will auto-generate id, createdAt and updatedAt for all tables, so
-// created_on was removed
 exports.Users = sequelize.define('User', {
   user_uid: {
     type: DataTypes.STRING,
@@ -69,17 +68,13 @@ exports.WorkoutExercises = sequelize.define('Workout_Exercise', {
     type: DataTypes.STRING,
     allowNull: false
   },
-  exercise_id: {
+  exercise_id: { //save auto-gen exercise id
     type: DataTypes.STRING,
     allowNull: false
   },
 });
 
 exports.Workouts = sequelize.define('Workout', {
-  workout_id: {
-    type: DataTypes.STRING,
-    allowNull: false
-  },
   title: {
     type: DataTypes.STRING,
     allowNull: false
@@ -125,31 +120,31 @@ exports.Measurements = sequelize.define('Measurement', {
     allowNull: false
   },
   shoulders: {
-    type: DateTypes.INTEGER
+    type: DataTypes.INTEGER
   },
   back: {
-    type: DateTypes.INTEGER
+    type: DataTypes.INTEGER
   },
   chest: {
-    type: DateTypes.INTEGER
+    type: DataTypes.INTEGER
   },
   bicep: {
-    type: DateTypes.INTEGER
+    type: DataTypes.INTEGER
   },
   tricep: {
-    type: DateTypes.INTEGER
+    type: DataTypes.INTEGER
   },
   waist: {
-    type: DateTypes.INTEGER
+    type: DataTypes.INTEGER
   },
   hips: {
-    type: DateTypes.INTEGER
+    type: DataTypes.INTEGER
   },
   quad: {
-    type: DateTypes.INTEGER
+    type: DataTypes.INTEGER
   },
   calf: {
-    type: DateTypes.INTEGER
+    type: DataTypes.INTEGER
   },
 });
 
@@ -168,7 +163,7 @@ exports.ClientPlans = sequelize.define('Client_Plan', {
   },
 });
 
-exports.Appointments = sequelize.define('Appointment', {
+exports.Sessions = sequelize.define('Session', {
   meeting_id: {
     type: DataTypes.STRING,
     allowNull: false
@@ -191,7 +186,11 @@ exports.Appointments = sequelize.define('Appointment', {
   },
 });
 
-exports.Plans = define('Plan', {
+exports.Plans = sequelize.define('Plan', {
+  trainer_uid: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
   details: {
     type: DataTypes.JSON,
     allowNull: false
@@ -206,8 +205,7 @@ exports.Plans = define('Plan', {
   },
 });
 
-
-exports.Tracker = define('Tracker', {
+exports.Tracker = sequelize.define('Tracker', {
   client_uid: {
     type: DataTypes.STRING,
     allowNull: false
@@ -230,7 +228,7 @@ exports.Tracker = define('Tracker', {
   },
 });
 
-exports.TrainerClients = define('Trainer_Client', {
+exports.TrainerClients = sequelize.define('Trainer_Client', {
   trainer_uid: {
     type: DataTypes.STRING,
     allowNull: false
@@ -241,6 +239,9 @@ exports.TrainerClients = define('Trainer_Client', {
   },
   date: {
     type: DataTypes.DATE,
-    allowNull: false
+    allowNull: false,
+    defaultValue: Date.now // ADDED THISSSSS
   },
 });
+
+sequelize.sync();
