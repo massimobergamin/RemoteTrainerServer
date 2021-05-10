@@ -19,7 +19,7 @@ router.get('/users/sessions/:type-:uid', getSessions);
 // re: plans
 router.post('/plans/:trainer_uid-:client_uid', postPlans);
 router.put('/plans/:plan_id', modifyPlans);
-router.get('/plans/:trainer_uid-:client_uid-:start_date', getTrainerPlans);
+// router.get('/plans/:trainer_uid-:client_uid-:start_date', getTrainerPlans);
 router.get('/plans/:client_uid-:start_date', getClientPlans);
 router.put('/planNotes/:client_uid-:plan_id', addPlanNotes);
 
@@ -29,6 +29,6 @@ router.get('/plans/exercises/:trainer_uid', getExercises);
 
 // workouts
 router.post('/workouts/:trainer_uid', postWorkouts);
-router.post('/exercises', postExercises);
+router.post('/exercises/:trainer_uid', postExercises);
 
 module.exports = router;

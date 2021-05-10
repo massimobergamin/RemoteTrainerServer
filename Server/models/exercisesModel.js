@@ -7,7 +7,7 @@ exports.getWorkoutsModel = async (trainer_uid) => {
     }
   });
 
-  let returnValue = []
+  let returnValue = [];
 
   for (let i = 0; i < workouts.length; i++) {
     returnValue.push(workouts[i].dataValues);
@@ -60,9 +60,9 @@ exports.postWorkoutsModel = async (trainer_uid, body) => {
   return workout;
 };
 
-exports.postExercisesModel = async (exerciseInfo) => {
+exports.postExercisesModel = async (trainer_uid, body) => {
   const exercise = await Exercises.create({
-    ...exerciseInfo
+    ...body, trainer_uid
   });
   return exercise;
 }

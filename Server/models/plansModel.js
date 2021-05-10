@@ -1,4 +1,5 @@
-const { Plans, ClientPlans} = require('../db');
+const { Plans, ClientPlans } = require('../db');
+const { Op } = require('sequelize');
 
 exports.postPlansModel = async (trainer_uid, client_uid, body) => {
 
@@ -29,18 +30,17 @@ exports.modifyPlansModel = async (plan_id, { details, start_date, end_date }) =>
  return plan;
 };
 
-exports.getTrainerPlansModel = async (trainer_uid, client_uid, start_date) => {
+// exports.getTrainerPlansModel = async (trainer_uid, client_uid, start_date) => {
 
-  const trainerPlans = await Plans.findAll({
-    where: {
-      trainer_uid,
-      //start_date - not formatted properly
-    }
-  });
+//   const trainerPlans = await Plans.findAll({
+//     where: {
+//       trainer_uid
+//     }
+//   });
 
-  //why client_uid?
-  return trainerPlans;
-};
+//   //why client_uid?
+//   return trainerPlans;
+// };
 
 //test again
 exports.getClientPlansModel = async (client_uid, start_date) => {
@@ -63,7 +63,7 @@ exports.getClientPlansModel = async (client_uid, start_date) => {
 };
 
 exports.addPlanNotesModel = async (client_uid, plan_id, body) => {
-
+// we don't need client_uid because plan_id is unique
   const updatedPlanNotes = await Plans.update({
     details: body
   },
