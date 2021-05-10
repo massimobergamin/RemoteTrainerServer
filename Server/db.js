@@ -1,7 +1,7 @@
 const { Sequelize, DataTypes } = require('sequelize');
 // const sequelize = new Sequelize('postgres://pkxgtjwuztfiwc:d47be1eb7435e73c1d1b02177fa7ba64214a5f8766de8d07415def5f5f273fce@ec2-35-174-35-242.compute-1.amazonaws.com:5432/defckmt2cf9m5i') // input heroku connection string
 
-const sequelize = new Sequelize('postgres://MassimoBergamin@127.0.0.1:5432/RemoteTrainer2') // input heroku connection string
+const sequelize = new Sequelize('postgres://postgres:methuk@127.0.0.1:5432/practice') // input heroku connection string
 
 try {
   sequelize.authenticate().then(console.log('Connection has been established successfully.'));
@@ -69,12 +69,16 @@ exports.WorkoutExercises = sequelize.define('Workout_Exercise', {
     allowNull: false
   },
   exercise_id: { //save auto-gen exercise id
-    type: DataTypes.STRING,
+    type: DataTypes.INTEGER,
     allowNull: false
   },
 });
 
 exports.Workouts = sequelize.define('Workout', {
+  trainer_uid: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
   title: {
     type: DataTypes.STRING,
     allowNull: false
@@ -84,7 +88,6 @@ exports.Workouts = sequelize.define('Workout', {
 exports.Exercises = sequelize.define('Exercise', {
   trainer_uid: {
     type: DataTypes.STRING,
-    allowNull: false
   },
   title: {
     type: DataTypes.STRING,

@@ -1,6 +1,6 @@
 const { Plans, ClientPlans} = require('../db');
 
-exports.postPlansModel = async (trainer_uid, client_uid, body) => { 
+exports.postPlansModel = async (trainer_uid, client_uid, body) => {
 
   const plans = await Plans.create({
     trainer_uid,
@@ -26,15 +26,15 @@ exports.modifyPlansModel = async (plan_id, { details, start_date, end_date }) =>
        id: plan_id
      }
    });
-
  return plan;
 };
 
-exports.getTrainerWorkoutsModel = async (trainer_uid, client_uid, start_date) => {
+exports.getTrainerPlansModel = async (trainer_uid, client_uid, start_date) => {
+
   const trainerPlans = await Plans.findAll({
     where: {
       trainer_uid,
-      start_date
+      //start_date - not formatted properly
     }
   });
 
@@ -42,24 +42,35 @@ exports.getTrainerWorkoutsModel = async (trainer_uid, client_uid, start_date) =>
   return trainerPlans;
 };
 
+//test again
 exports.getClientPlansModel = async (client_uid, start_date) => {
-  const clientPlans = await Plans.findAll({
+
+  const clientPlans = await ClientPlans.findOne({
     where: {
       client_uid,
-      start_date
     }
   });
 
-  return clientPlans;
+  const plan_id = clientPlans.dataValues.plan_id;
+
+  const plan = await Plans.findAll({
+    where: {
+      id: plan_id
+    }
+  });
+
+  return plan;
 };
 
 exports.addPlanNotesModel = async (client_uid, plan_id, body) => {
-  const updatedPlanNotes = await Plans.update({details: body}, 
+
+  const updatedPlanNotes = await Plans.update({
+    details: body
+  },
     {
-      where: {
-        client_uid,
-        plan_id
-      }
+    where: {
+      id: plan_id
+    }
   });
 
   return updatedPlanNotes;

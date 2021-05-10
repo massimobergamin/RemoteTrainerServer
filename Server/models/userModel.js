@@ -3,23 +3,29 @@ const { Users, Sessions, ClientPlans, Plans, TrainerClients } = require('../db')
 exports.postUserModel = async(body) => {
   console.log(body);
   let newUser = await Users.create(body);
-  console.log("new user", newUser);
   return newUser;
 }
 
+exports.updateUserModel = async(uid, body) => {
+  let modified = await Users.update(body, { where: { user_uid: uid }});
+  return modified;
+}
+
 exports.getUserModel = async(uid) => {
-  let user;
-  user = await Users.findAll({ where: { user_uid: uid } });
+  let user = await Users.findOne({ where: { user_uid: uid } });
+  user = user.dataValues;
+
   if (user.type === 'trainer') {
     let sessions = await Sessions.findAll({ where: { trainer_uid: uid } });
     user.sessions = sessions;
   }
   else {
     let clientPlans = await ClientPlans.findAll({ where: { client_uid: uid } });
-    clientPlans.forEach(async (clientPlan) => {
-      let plan = await Plans.findAll({ where: { id: clientPlan.id } });
-      user.plans.push(plan);
-    })
+    for (let i = 0; i < clientPlans.length; i++) {
+      let plan = await Plans.findAll({ where: { id: clientPlans[i].id } });
+      user.plans = user.plans || [];
+      user.plans.push(plan[0].dataValues);
+    }
   }
   return user;
 }
@@ -30,28 +36,24 @@ exports.postClientModel = async(trainer_uid, client_uid) => {
 }
 
 exports.getClientsModel = async(uid) => {
-  console.log('here in MODELL')
   let trainerClients = await TrainerClients.findAll({ where: { trainer_uid: uid } });
-  console.log('after trainerClients')
-
   let uidArr = [];
-  trainerClients.forEach((clientMatch) => uidArr.push(clientMatch.client_uid));
+  for (let i = 0; i < trainerClients.length; i++) {
+    uidArr.push(trainerClients[i].dataValues.client_uid)
+  }
   let clientInfoArr = [];
-  uidArr.forEach(async (uid, i) => {
-    let user = await Users.findAll({ where: { user_uid: uid } });
-    console.log('after users')
 
-    clientInfoArr.push(user[0]);
-    let clientPlans = await ClientPlans.findAll({ where: { client_uid: uid } });
-    console.log('after clientplans')
-    console.log('clientplans', clientPlans.length)
+  for (let i = 0; i < uidArr.length; i++) {
+    let user = await Users.findOne({ where: { user_uid: uidArr[i] } });
 
-    clientPlans.forEach(async (clientPlan) => {
-      console.log('after plans')
-      let plan = await Plans.findAll({ where: { id: clientPlan.id } });
+    clientInfoArr.push(user.dataValues);
+    let clientPlans = await ClientPlans.findAll({ where: { client_uid: uidArr[i] } });
 
-      clientInfoArr[i].plans.push(plan);
-    })
-    return clientInfoArr;
-  })
+    for (let j = 0; j < clientPlans.length; j++) {
+      let plan = await Plans.findOne({ where: { id: clientPlans[j].dataValues.plan_id } });
+      clientInfoArr[i].plans = clientInfoArr[i].plans || [];
+      clientInfoArr[i].plans.push(plan.dataValues);
+    }
+  }
+  return clientInfoArr;
 }
