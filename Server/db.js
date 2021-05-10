@@ -1,7 +1,7 @@
 const { Sequelize, DataTypes } = require('sequelize');
 // const sequelize = new Sequelize('postgres://pkxgtjwuztfiwc:d47be1eb7435e73c1d1b02177fa7ba64214a5f8766de8d07415def5f5f273fce@ec2-35-174-35-242.compute-1.amazonaws.com:5432/defckmt2cf9m5i') // input heroku connection string
 
-const sequelize = new Sequelize('postgres://MassimoBergamin@127.0.0.1:5432/RT1') // input heroku connection string
+const sequelize = new Sequelize('postgres://postgres:methuk@127.0.0.1:5432/practice') // input heroku connection string
 
 try {
   sequelize.authenticate().then(console.log('Connection has been established successfully.'));
@@ -64,7 +64,7 @@ const Invite = sequelize.define('invite', {
 });
 
 // const Workout_Exercise = sequelize.define('workout_exercise', {
-  
+
 // });
 
 const Workout = sequelize.define('workout', {
@@ -253,25 +253,37 @@ const TrainerToClient = sequelize.define('trainertoclient', {
 });
 
 User.hasMany(Workout);
-Workout.belongsTo(User);
+Workout.belongsTo(User, {
+  onDelete: 'CASCADE',
+  onUpdate: 'CASCADE'
+});
 
-Workout.belongsToMany(Exercise, { through: 'workout_exercise' });
-Exercise.belongsToMany(Workout, { through: 'workout_exercise' });
+Workout.belongsToMany(Exercise, { through: 'workout_exercise', onDelete: 'NO ACTION', onUpdate: 'CASCADE' });
+Exercise.belongsToMany(Workout, { through: 'workout_exercise', onDelete: 'NO ACTION', onUpdate: 'CASCADE' });
 
 User.hasMany(Exercise);
-Exercise.belongsTo(User);
+Exercise.belongsTo(User, {
+  onDelete: 'CASCADE',
+  onUpdate: 'CASCADE'
+});
 
 User.hasOne(Measurement);
-Measurement.belongsTo(User);
+Measurement.belongsTo(User, {
+  onDelete: 'CASCADE',
+  onUpdate: 'CASCADE'
+});
 
-User.belongsToMany(Plan, { through: 'user_plan' }); // UserPlan auto-generated
-Plan.belongsToMany(User, { through: 'user_plan' });
+User.belongsToMany(Plan, { through: 'user_plan', onDelete: 'NO ACTION', onUpdate: 'CASCADE' });
+Plan.belongsToMany(User, { through: 'user_plan', onDelete: 'CASCADE', onUpdate: 'CASCADE' });
 
-User.belongsToMany(Session, { through: 'user_session' }); // UserSession auto-generated
-Session.belongsToMany(User, { through: 'user_session' });
+User.belongsToMany(Session, { through: 'user_session', onDelete: 'NO ACTION', onUpdate: 'CASCADE' });
+Session.belongsToMany(User, { through: 'user_session', onDelete: 'CASCADE', onUpdate: 'CASCADE' });
 
 User.hasOne(Tracker);
-Tracker.belongsTo(User);
+Tracker.belongsTo(User, {
+  onDelete: 'CASCADE',
+  onUpdate: 'CASCADE'
+});
 
 sequelize.sync();
 
