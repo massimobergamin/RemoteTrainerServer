@@ -1,10 +1,11 @@
-const { getWorkoutsModel, getExercisesModel, postExercisesModel, postWorkoutsModel } = require('../models/exercisesModel');
+const { getWorkoutsModel, getExercisesModel, postExercisesModel, postWorkoutsModel, storeExercisesModel } = require('../models/exercisesModel');
 
 exports.getWorkouts = async (req, res) => {
   try {
     const workouts = await getWorkoutsModel(req.params.trainer_uid);
     res.status(200).send(workouts);
   } catch (error) {
+    console.log(error)
     res.status(500).send(error);
   }
 };
@@ -23,6 +24,7 @@ exports.postWorkouts = async (req, res) => {
     const workouts = await postWorkoutsModel(req.params.trainer_uid, req.body);
     res.status(200).send(workouts);
   } catch (error) {
+    console.log(error)
     res.status(500).send(error);
   }
 };
@@ -30,6 +32,15 @@ exports.postWorkouts = async (req, res) => {
 exports.postExercises = async (req, res) => {
   try {
     const exercise = await postExercisesModel(req.params.trainer_uid, req.body);
+    res.status(200).send(exercise);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+};
+
+exports.storeExercises = async (req, res) => {
+  try {
+    const exercise = await storeExercisesModel(req.body);
     res.status(200).send(exercise);
   } catch (error) {
     res.status(500).send(error);

@@ -1,7 +1,7 @@
 const { Sequelize, DataTypes } = require('sequelize');
 // const sequelize = new Sequelize('postgres://pkxgtjwuztfiwc:d47be1eb7435e73c1d1b02177fa7ba64214a5f8766de8d07415def5f5f273fce@ec2-35-174-35-242.compute-1.amazonaws.com:5432/defckmt2cf9m5i') // input heroku connection string
 
-const sequelize = new Sequelize('postgres://postgres:methuk@127.0.0.1:5432/practice') // input heroku connection string
+const sequelize = new Sequelize('postgres://MassimoBergamin@127.0.0.1:5432/RT1') // input heroku connection string
 
 try {
   sequelize.authenticate().then(console.log('Connection has been established successfully.'));
@@ -63,12 +63,9 @@ const Invite = sequelize.define('invite', {
   },
 });
 
-const Workout_Exercise = sequelize.define('workout_exercise', {
-  trainer_uid: { // changed from id to uid
-    type: DataTypes.STRING,
-    allowNull: false
-  },
-});
+// const Workout_Exercise = sequelize.define('workout_exercise', {
+  
+// });
 
 const Workout = sequelize.define('workout', {
   trainer_uid: {
@@ -258,8 +255,8 @@ const TrainerToClient = sequelize.define('trainertoclient', {
 User.hasMany(Workout);
 Workout.belongsTo(User);
 
-Workout.belongsToMany(Exercise, { through: Workout_Exercise });
-Exercise.belongsToMany(Workout, { through: Workout_Exercise });
+Workout.belongsToMany(Exercise, { through: 'workout_exercise' });
+Exercise.belongsToMany(Workout, { through: 'workout_exercise' });
 
 User.hasMany(Exercise);
 Exercise.belongsTo(User);
@@ -278,4 +275,4 @@ Tracker.belongsTo(User);
 
 sequelize.sync();
 
-module.exports = { User, Invite, Workout_Exercise, Workout, Measurement, Exercise, Session, Plan, Tracker, TrainerToClient }
+module.exports = { User, Invite, Workout, Measurement, Exercise, Session, Plan, Tracker, TrainerToClient }
