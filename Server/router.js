@@ -32,6 +32,6 @@ router.post('/workouts/:trainer_uid', postWorkouts);
 router.post('/exercises/:trainer_uid', postExercises);
 
 //for us to store into our DB
-router.post('/exercises', storeExercises);
+router.post('/defaultexercises', storeExercises);
 
 module.exports = router;
