@@ -20,7 +20,7 @@ exports.updateUser = async(req, res) => {
 
 exports.getUser = async(req, res) => {
   try {
-    let user = await getUserModel(req.params.uid);
+    let user = await getUserModel(req.params.uid, req.params.type);
     res.status(200).send(user);
   } catch (err) {
     res.status(500).send(err);

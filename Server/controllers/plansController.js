@@ -2,9 +2,11 @@ const { postPlansModel, modifyPlansModel, getTrainerPlansModel, getClientPlansMo
 
 exports.postPlans = async (req, res) => {
   try {
+
     const plans = await postPlansModel(req.params.trainer_uid, req.params.client_uid, req.body);
     res.status(200).send(plans);
   } catch (error) {
+    console.log("inController", error);
     res.status(500).send(error);
   }
 };
@@ -39,7 +41,7 @@ exports.getClientPlans = async (req, res) => {
 exports.addPlanNotes = async (req, res) => {
   console.log(req.params);
   try {
-    const planNotes = await addPlanNotesModel(req.params.client_id, req.params.plan_id, req.body);
+    const planNotes = await addPlanNotesModel(req.params.plan_id, req.body);
     res.status(200).send(planNotes);
   } catch (error) {
     res.status(500).send(error);

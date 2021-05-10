@@ -7,7 +7,7 @@ const { getWorkouts, getExercises, postWorkouts, postExercises } = require('./co
 // re: users
 router.post('/users', postUser);
 router.put('/users/:uid', updateUser); // new route
-router.get('/users/:uid', getUser);
+router.get('/users/:uid-:type', getUser);
 router.post('/clients/:trainer_uid-:client_uid', postClient);
 router.get('/clients/:uid', getClients);
 
@@ -21,7 +21,7 @@ router.post('/plans/:trainer_uid-:client_uid', postPlans);
 router.put('/plans/:plan_id', modifyPlans);
 // router.get('/plans/:trainer_uid-:client_uid-:start_date', getTrainerPlans);
 router.get('/plans/:client_uid-:start_date', getClientPlans);
-router.put('/planNotes/:client_uid-:plan_id', addPlanNotes);
+router.put('/planNotes/:plan_id', addPlanNotes);
 
 // re: exercises
 router.get('/plans/exGroups/:trainer_uid', getWorkouts);

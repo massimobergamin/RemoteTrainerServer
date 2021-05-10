@@ -9,7 +9,7 @@ try {
   console.error('Unable to connect to the database:', error);
 }
 
-exports.Users = sequelize.define('User', {
+const User = sequelize.define('user', {
   user_uid: {
     type: DataTypes.STRING,
     allowNull: false
@@ -52,7 +52,7 @@ exports.Users = sequelize.define('User', {
   },
 });
 
-exports.Invites = sequelize.define('Invite', {
+const Invite = sequelize.define('invite', {
   trainer_uid: {
     type: DataTypes.STRING,
     allowNull: false
@@ -63,18 +63,14 @@ exports.Invites = sequelize.define('Invite', {
   },
 });
 
-exports.WorkoutExercises = sequelize.define('Workout_Exercise', {
-  workout_id: {
+const Workout_Exercise = sequelize.define('workout_exercise', {
+  trainer_uid: { // changed from id to uid
     type: DataTypes.STRING,
-    allowNull: false
-  },
-  exercise_id: { //save auto-gen exercise id
-    type: DataTypes.INTEGER,
     allowNull: false
   },
 });
 
-exports.Workouts = sequelize.define('Workout', {
+const Workout = sequelize.define('workout', {
   trainer_uid: {
     type: DataTypes.STRING,
     allowNull: false
@@ -85,7 +81,7 @@ exports.Workouts = sequelize.define('Workout', {
   },
 });
 
-exports.Exercises = sequelize.define('Exercise', {
+const Exercise = sequelize.define('exercise', {
   trainer_uid: {
     type: DataTypes.STRING,
   },
@@ -113,8 +109,12 @@ exports.Exercises = sequelize.define('Exercise', {
   },
 });
 
-exports.Measurements = sequelize.define('Measurement', {
-  user_uid: {
+const Measurement = sequelize.define('measurement', {
+  client_uid: { // deleted user_uid and added this
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  trainer_uid: { // added
     type: DataTypes.STRING,
     allowNull: false
   },
@@ -151,22 +151,22 @@ exports.Measurements = sequelize.define('Measurement', {
   },
 });
 
-exports.ClientPlans = sequelize.define('Client_Plan', {
-  client_uid: {
-    type: DataTypes.STRING,
-    allowNull: false
-  },
-  trainer_uid: {
-    type: DataTypes.STRING,
-    allowNull: false
-  },
-  plan_id: {
-    type: DataTypes.INTEGER,
-    allowNull: false
-  },
-});
+// const ClientPlan = sequelize.define('Client_Plan', {
+//   client_uid: {
+//     type: DataTypes.STRING,
+//     allowNull: false
+//   },
+//   trainer_uid: {
+//     type: DataTypes.STRING,
+//     allowNull: false
+//   },
+//   plan_id: {
+//     type: DataTypes.INTEGER,
+//     allowNull: false
+//   },
+// });
 
-exports.Sessions = sequelize.define('Session', {
+const Session = sequelize.define('session', {
   meeting_id: {
     type: DataTypes.STRING,
     allowNull: false
@@ -189,8 +189,12 @@ exports.Sessions = sequelize.define('Session', {
   },
 });
 
-exports.Plans = sequelize.define('Plan', {
+const Plan = sequelize.define('plan', {
   trainer_uid: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  client_uid: { // added
     type: DataTypes.STRING,
     allowNull: false
   },
@@ -208,8 +212,12 @@ exports.Plans = sequelize.define('Plan', {
   },
 });
 
-exports.Tracker = sequelize.define('Tracker', {
+const Tracker = sequelize.define('tracker', {
   client_uid: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  trainer_uid: { // added
     type: DataTypes.STRING,
     allowNull: false
   },
@@ -231,7 +239,7 @@ exports.Tracker = sequelize.define('Tracker', {
   },
 });
 
-exports.TrainerClients = sequelize.define('Trainer_Client', {
+const TrainerToClient = sequelize.define('trainertoclient', {
   trainer_uid: {
     type: DataTypes.STRING,
     allowNull: false
@@ -243,8 +251,31 @@ exports.TrainerClients = sequelize.define('Trainer_Client', {
   date: {
     type: DataTypes.DATE,
     allowNull: false,
-    defaultValue: Date.now // ADDED THISSSSS
+    defaultValue: Date.now
   },
 });
 
+User.hasMany(Workout);
+Workout.belongsTo(User);
+
+Workout.belongsToMany(Exercise, { through: Workout_Exercise });
+Exercise.belongsToMany(Workout, { through: Workout_Exercise });
+
+User.hasMany(Exercise);
+Exercise.belongsTo(User);
+
+User.hasOne(Measurement);
+Measurement.belongsTo(User);
+
+User.belongsToMany(Plan, { through: 'user_plan' }); // UserPlan auto-generated
+Plan.belongsToMany(User, { through: 'user_plan' });
+
+User.belongsToMany(Session, { through: 'user_session' }); // UserSession auto-generated
+Session.belongsToMany(User, { through: 'user_session' });
+
+User.hasOne(Tracker);
+Tracker.belongsTo(User);
+
 sequelize.sync();
+
+module.exports = { User, Invite, Workout_Exercise, Workout, Measurement, Exercise, Session, Plan, Tracker, TrainerToClient }
