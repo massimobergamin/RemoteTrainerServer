@@ -58,7 +58,7 @@ exports.getClientPlansModel = async (client_uid, start_date) => {
   //   }
   // });
 
-  let userPlans = await Plan.findAll({ where: { client_uid } }); // need to figure out start_date
+  let userPlans = await Plan.findAll({ where: { client_uid, start_date: {[Op.gte]: start_date}, } }); // need to figure out start_date
 
   return userPlans;
 };

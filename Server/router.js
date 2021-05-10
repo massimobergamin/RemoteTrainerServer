@@ -2,7 +2,7 @@ const router = require('express').Router();
 const { postUser, updateUser, getUser, postClient, getClients } = require('./controllers/userController');
 const { postSession, modifySession, getSessions } = require('./controllers/sessionsController');
 const { postPlans, modifyPlans, getTrainerPlans, getClientPlans, addPlanNotes } = require('./controllers/plansController');
-const { getWorkouts, getExercises, postWorkouts, postExercises } = require('./controllers/exercisesController');
+const { getWorkouts, getExercises, postWorkouts, postExercises, storeExercises } = require('./controllers/exercisesController');
 
 // re: users
 router.post('/users', postUser);
@@ -30,5 +30,8 @@ router.get('/plans/exercises/:trainer_uid', getExercises);
 // workouts
 router.post('/workouts/:trainer_uid', postWorkouts);
 router.post('/exercises/:trainer_uid', postExercises);
+
+//for us to store into our DB
+router.post('/exercises', storeExercises);
 
 module.exports = router;
