@@ -11,6 +11,7 @@ exports.getExercisesModel = async (trainer_uid) => {
       trainer_uid
     }
   });
+  console.log(exercises);
   return exercises;
 };
 
@@ -31,16 +32,22 @@ exports.postWorkoutModel = async (trainer_uid, body) => {
 
 exports.postExerciseModel = async (trainer_uid, exerciseInfo) => {
   const exercise = await Exercise.create({
-    ...exerciseInfo
+    ...exerciseInfo,
+    trainer_uid
   });
   let trainer = await User.findOne({ where: { user_uid: trainer_uid } })
   await exercise.setUser(trainer);
   return exercise;
-}
+};
 
 exports.storeExerciseModel = async (exerciseInfo) => {
   const exercise = await Exercise.create({
     ...exerciseInfo
   });
   return exercise;
-}
+};
+
+exports.getSessionModel = async(meeting_id) => {
+  let session = await Session.findOne({ where: { meeting_id } });
+  return session;
+};

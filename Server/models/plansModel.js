@@ -1,4 +1,6 @@
 const { User, Plan } = require('../db');
+const Sequelize = require('sequelize');
+const Op = Sequelize.Op;
 
 exports.postPlanModel = async (trainer_uid, client_uid, body) => {
   let trainer = await User.findOne({ where: { user_uid: trainer_uid } });
@@ -23,7 +25,7 @@ exports.modifyPlanModel = async (plan_id, body) => {
 };
 
 exports.getClientPlansModel = async (client_uid, start_date) => {
-  let userPlans = await Plan.findAll({ where: { client_uid, start_date: { [Op.gte]: start_date } } });
+  let userPlans = await Plan.findAll({ where: { client_uid, start_date: { [Op.gte]: +start_date } } });
   return userPlans;
 };
 

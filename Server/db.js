@@ -1,7 +1,7 @@
 const { Sequelize, DataTypes } = require('sequelize');
 // const sequelize = new Sequelize('postgres://pkxgtjwuztfiwc:d47be1eb7435e73c1d1b02177fa7ba64214a5f8766de8d07415def5f5f273fce@ec2-35-174-35-242.compute-1.amazonaws.com:5432/defckmt2cf9m5i') // input heroku connection string
 
-const sequelize = new Sequelize('postgres://postgres:methuk@127.0.0.1:5432/practice') // input heroku connection string
+const sequelize = new Sequelize('postgres://MassimoBergamin@127.0.0.1:5432/RT1') // input heroku connection string
 
 try {
   sequelize.authenticate().then(console.log('Connection has been established successfully.'));
@@ -183,6 +183,11 @@ const Session = sequelize.define('session', {
   date: {
     type: DataTypes.DATE,
     allowNull: false
+  },
+  in_use: {
+    type: DataTypes.BOOLEAN,
+    allowNull: false,
+    defaultValue: false
   },
 });
 
