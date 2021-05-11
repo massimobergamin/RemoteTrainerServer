@@ -1,4 +1,4 @@
-const { postSessionModel, modifySessionModel, getSessionsModel } = require('../models/sessionsModel');
+const { postSessionModel, modifySessionModel, getSessionsModel, getSessionModel } = require('../models/sessionsModel');
 
 exports.postSession = async(req, res) => {
   try {
@@ -7,7 +7,7 @@ exports.postSession = async(req, res) => {
   } catch (err) {
     res.status(500).send(err);
   }
-}
+};
 
 exports.modifySession = async(req, res) => {
   try {
@@ -16,7 +16,7 @@ exports.modifySession = async(req, res) => {
   } catch (err) {
     res.status(500).send(err);
   }
-}
+};
 
 exports.getSessions = async(req, res) => {
   try {
@@ -25,4 +25,13 @@ exports.getSessions = async(req, res) => {
   } catch (err) {
     res.status(500).send(err);
   }
-}
+};
+
+exports.getSession = async(req, res) => {
+  try {
+    let session = await getSessionModel(req.params.meeting_id);
+    res.status(200).send(session);
+  } catch (err) {
+    res.status(500).send(err);
+  }
+};

@@ -64,7 +64,7 @@ const Invite = sequelize.define('invite', {
 });
 
 // const Workout_Exercise = sequelize.define('workout_exercise', {
-  
+
 // });
 
 const Workout = sequelize.define('workout', {
@@ -184,6 +184,11 @@ const Session = sequelize.define('session', {
     type: DataTypes.DATE,
     allowNull: false
   },
+  in_use: {
+    type: DataTypes.BOOLEAN,
+    allowNull: false,
+    defaultValue: false
+  },
 });
 
 const Plan = sequelize.define('plan', {
@@ -253,25 +258,37 @@ const TrainerToClient = sequelize.define('trainertoclient', {
 });
 
 User.hasMany(Workout);
-Workout.belongsTo(User);
+Workout.belongsTo(User, {
+  onDelete: 'CASCADE',
+  onUpdate: 'CASCADE'
+});
 
-Workout.belongsToMany(Exercise, { through: 'workout_exercise' });
-Exercise.belongsToMany(Workout, { through: 'workout_exercise' });
+Workout.belongsToMany(Exercise, { through: 'workout_exercise', onDelete: 'NO ACTION', onUpdate: 'CASCADE' });
+Exercise.belongsToMany(Workout, { through: 'workout_exercise', onDelete: 'NO ACTION', onUpdate: 'CASCADE' });
 
 User.hasMany(Exercise);
-Exercise.belongsTo(User);
+Exercise.belongsTo(User, {
+  onDelete: 'CASCADE',
+  onUpdate: 'CASCADE'
+});
 
 User.hasOne(Measurement);
-Measurement.belongsTo(User);
+Measurement.belongsTo(User, {
+  onDelete: 'CASCADE',
+  onUpdate: 'CASCADE'
+});
 
-User.belongsToMany(Plan, { through: 'user_plan' }); // UserPlan auto-generated
-Plan.belongsToMany(User, { through: 'user_plan' });
+User.belongsToMany(Plan, { through: 'user_plan', onDelete: 'NO ACTION', onUpdate: 'CASCADE' });
+Plan.belongsToMany(User, { through: 'user_plan', onDelete: 'CASCADE', onUpdate: 'CASCADE' });
 
-User.belongsToMany(Session, { through: 'user_session' }); // UserSession auto-generated
-Session.belongsToMany(User, { through: 'user_session' });
+User.belongsToMany(Session, { through: 'user_session', onDelete: 'NO ACTION', onUpdate: 'CASCADE' });
+Session.belongsToMany(User, { through: 'user_session', onDelete: 'CASCADE', onUpdate: 'CASCADE' });
 
 User.hasOne(Tracker);
-Tracker.belongsTo(User);
+Tracker.belongsTo(User, {
+  onDelete: 'CASCADE',
+  onUpdate: 'CASCADE'
+});
 
 sequelize.sync();
 

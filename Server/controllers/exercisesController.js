@@ -1,4 +1,4 @@
-const { getWorkoutsModel, getExercisesModel, postExercisesModel, postWorkoutsModel, storeExercisesModel } = require('../models/exercisesModel');
+const { getWorkoutsModel, getExercisesModel, postExerciseModel, postWorkoutModel, storeExerciseModel } = require('../models/exercisesModel');
 
 exports.getWorkouts = async (req, res) => {
   try {
@@ -19,9 +19,9 @@ exports.getExercises = async (req, res) => {
   }
 };
 
-exports.postWorkouts = async (req, res) => {
+exports.postWorkout = async (req, res) => {
   try {
-    const workouts = await postWorkoutsModel(req.params.trainer_uid, req.body);
+    const workouts = await postWorkoutModel(req.params.trainer_uid, req.body);
     res.status(200).send(workouts);
   } catch (error) {
     console.log(error)
@@ -29,18 +29,18 @@ exports.postWorkouts = async (req, res) => {
   }
 };
 
-exports.postExercises = async (req, res) => {
+exports.postExercise = async (req, res) => {
   try {
-    const exercise = await postExercisesModel(req.params.trainer_uid, req.body);
+    const exercise = await postExerciseModel(req.params.trainer_uid, req.body);
     res.status(200).send(exercise);
   } catch (error) {
     res.status(500).send(error);
   }
 };
 
-exports.storeExercises = async (req, res) => {
+exports.storeExercise = async (req, res) => {
   try {
-    const exercise = await storeExercisesModel(req.body);
+    const exercise = await storeExerciseModel(req.body);
     res.status(200).send(exercise);
   } catch (error) {
     res.status(500).send(error);
