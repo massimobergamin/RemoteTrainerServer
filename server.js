@@ -3,19 +3,19 @@ const app = express();
 const router = require('./router');
 const cors = require('cors');
 const port = process.env.PORT || 3050;
-// const server = require ('http').Server(app);
-// const io = require('socket.io')(server);
-// const {ExpressPeerServer} = require('peer');
-// const peerServer = ExpressPeerServer(server, 
-// {
-//     path: '/'
-// });
-// const { Session, User } = require('./db');
+const server = require ('http').Server(app);
+const io = require('socket.io')(server);
+const {ExpressPeerServer} = require('peer');
+const peerServer = ExpressPeerServer(server, 
+{
+    path: '/'
+});
+const { Session, User } = require('./db');
 
-app.use(cors());
+server.use(cors());
 app.use(express.json());
 app.use(router);
-// app.use('/peerjs', peerServer);
+app.use('/peerjs', peerServer);
 
 // peerServer.on('connection', peer => {
 //     console.log("Peer connected", peer.id)
