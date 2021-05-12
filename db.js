@@ -3,9 +3,13 @@ const { Sequelize, DataTypes } = require('sequelize');
 
 const sequelize = new Sequelize('postgres://ynpiblkpcilidz:0d0855fd35c0a04db6b5318a5993e73da909a486b68c370aaf47aeb451f1a08c@ec2-54-167-168-52.compute-1.amazonaws.com:5432/dcr57ntb2nuke1', 
 {
-  ssl: {
-    rejectUnauthorized: false,
-  }
+  ssl: true,
+    dialectOptions: {
+      ssl: {
+        require: true,
+        rejectUnauthorized: false
+      }
+    }
 }) // input heroku connection string
 //const sequelize = new Sequelize('postgres://MassimoBergamin@127.0.0.1:5432/RT1') 
 
