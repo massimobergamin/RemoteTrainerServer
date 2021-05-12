@@ -4,8 +4,7 @@ const router = require('./router');
 const cors = require('cors');
 const port = process.env.PORT || 3050;
 const server = require ('http').Server(app);
-const io = require('socket.io')(server);
-io.origins('*:*')
+const io = require('socket.io')(server, { cors: { origin: '*' }});
 const {ExpressPeerServer} = require('peer');
 const peerServer = ExpressPeerServer(server
 // {
@@ -14,7 +13,7 @@ const peerServer = ExpressPeerServer(server
 );
 const { Session, User } = require('./db');
 
-server.use(cors());
+app.use(cors());
 app.use(express.json());
 app.use(router);
 app.use('/peerjs', peerServer);
