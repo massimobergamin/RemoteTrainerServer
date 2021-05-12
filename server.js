@@ -6,10 +6,10 @@ const port = process.env.PORT || 3050;
 const server = require ('http').Server(app);
 const io = require('socket.io')(server, { cors: { origin: '*' }});
 const {ExpressPeerServer} = require('peer');
-const peerServer = ExpressPeerServer(server
-// {
-//     path: '/'
-// }
+const peerServer = ExpressPeerServer(server,
+    {
+        path: '/'
+    }
 );
 const { Session, User } = require('./db');
 
