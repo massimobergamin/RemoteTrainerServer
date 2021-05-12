@@ -9,7 +9,8 @@ const sequelize = new Sequelize('postgres://ynpiblkpcilidz:0d0855fd35c0a04db6b53
         require: true,
         rejectUnauthorized: false
       }
-    }
+    },
+    logging: false
 }) // input heroku connection string
 //const sequelize = new Sequelize('postgres://MassimoBergamin@127.0.0.1:5432/RT1') 
 
