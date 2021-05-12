@@ -3,8 +3,10 @@ const { postUserModel, updateUserModel, getUserModel, postClientModel, getClient
 exports.postUser = async(req, res) => {
   try {
     let newUser = await postUserModel(req.body);
+    console.log("Received!")
     res.status(201).send(newUser);
   } catch (err) {
+    console.log(err)
     res.status(500).send(err);
   }
 }
