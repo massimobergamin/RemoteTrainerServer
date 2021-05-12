@@ -1,10 +1,9 @@
-const { postUserModel, updateUserModel, getUserModel, postClientModel, getClientsModel } = require('../models/userModel');
+const { postUserModel, updateUserModel, getUserModel, postClientModel, getClientsModel, postCodeModel, getCodeModel } = require('../models/userModel');
 
 exports.postUser = async(req, res) => {
   try {
     let newUser = await postUserModel(req.body);
-    console.log("Received!")
-    res.status(201).send(newUser);
+    typeof newUser === 'string' ? res.status(200).send(newUser) : res.status(201).send(newUser);
   } catch (err) {
     console.log(err)
     res.status(500).send(err);
@@ -42,6 +41,24 @@ exports.getClients = async(req, res) => {
   try {
     let clients = await getClientsModel(req.params.uid);
     res.status(200).send(clients);
+  } catch (err) {
+    res.status(500).send(err);
+  }
+}
+
+exports.postCode = async(req, res) => {
+  try {
+    let code = await postCodeModel(req.params.uid, req.body);
+    res.status(201).send(code);
+  } catch (err) {
+    res.status(500).send(err);
+  }
+}
+
+exports.getCode = async(req, res) => {
+  try {
+    let code = await getCodeModel(req.params.uid);
+    res.status(200).send(code);
   } catch (err) {
     res.status(500).send(err);
   }
