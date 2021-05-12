@@ -4,16 +4,14 @@ const router = require('./router');
 const cors = require('cors');
 const port = process.env.PORT || 3050;
 const server = require ('http').Server(app);
-const io = require('socket.io')(server, {
-    cors: {
-        origin: ["https://fitome.vercel.app/", "http://localhost"],
-    }
-});
+const io = require('socket.io')(server);
+io.origins('*:*')
 const {ExpressPeerServer} = require('peer');
-const peerServer = ExpressPeerServer(server, 
-{
-    path: '/'
-});
+const peerServer = ExpressPeerServer(server
+// {
+//     path: '/'
+// }
+);
 const { Session, User } = require('./db');
 
 server.use(cors());
