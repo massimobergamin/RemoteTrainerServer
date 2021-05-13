@@ -24,8 +24,9 @@ exports.getUserModel = async(uid, type) => {
     user = await User.findOne({ where: { user_uid: uid }, include: Plan });
     trainerInfo = await TrainerToClient.findOne({ where: { client_uid: uid } });
     user.dataValues.trainerInfo = trainerInfo.dataValues;
+    user = user.dataValues;
   }
-  return user.dataValues;
+  return user;
 }
 
 exports.postClientModel = async(trainer_uid, client_uid) => {
