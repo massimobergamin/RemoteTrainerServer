@@ -32,6 +32,7 @@ io.on('connection', socket => {
         // TODO: call db to add in_use flag with sessionId
         Session.update({in_use: true}, {where:{id:sessionId}})
         .then ( (res) => {
+            console.log("UPDATED FLAG")
             socket.broadcast.emit("user-connected", userId) //to tell person in room you are there
         })
     });
@@ -54,14 +55,16 @@ io.on('connection', socket => {
         //}
         
         socket.on('disconnect', () => {
-            socket.broadcast.emit('user-disconnected', userId)
+            socket.broadcast.emit('user-disconnected')
         });
     });
   
     //listens for a disconnect
     socket.on('hang-up', () => {
-        socket.broadcast.emit("Call Ended")
-    });
+        socket.broadcast.emit("call-ended")
+        socket.disconnect();
+        console.log("I AM DISCONNECTED")
+    })
 });
 
 
