@@ -1,4 +1,5 @@
 const { Workout, Exercise, User } = require('../db');
+const { Op } = require('sequelize');
 
 exports.getWorkoutsModel = async (trainer_uid) => {
   let workout = await Workout.findAll({ where: {trainer_uid}, include: Exercise });
@@ -6,12 +7,7 @@ exports.getWorkoutsModel = async (trainer_uid) => {
 };
 
 exports.getExercisesModel = async (trainer_uid) => {
-  const exercises = await Exercise.findAll({
-    where: {
-      trainer_uid
-    }
-  });
-  console.log(exercises);
+  const exercises = await Exercise.findAll({ where: { [Op.or]: [{ trainer_uid }, { type: 'general' }] } });
   return exercises;
 };
 
@@ -23,8 +19,8 @@ exports.postWorkoutModel = async (trainer_uid, body) => {
   const trainer = await User.findOne({ where: { user_uid: trainer_uid } });
   await workout.setUser(trainer);
 
-  for (let i = 1; i < Object.values(body).length; i++) {
-    const exercise = await Exercise.findOne({ where: { id: Object.values(body)[i] } });
+  for (let i = 0; i < body.exerciseIds.length; i++) {
+    const exercise = await Exercise.findOne({ where: { id: body.exerciseIds[i] } });
     await workout.addExercise(exercise);
   }
   return workout;

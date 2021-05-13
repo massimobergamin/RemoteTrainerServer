@@ -1,7 +1,7 @@
 const { Sequelize, DataTypes } = require('sequelize');
 // const sequelize = new Sequelize('postgres://pkxgtjwuztfiwc:d47be1eb7435e73c1d1b02177fa7ba64214a5f8766de8d07415def5f5f273fce@ec2-35-174-35-242.compute-1.amazonaws.com:5432/defckmt2cf9m5i') // input heroku connection string
 
-const sequelize = new Sequelize('postgres://ynpiblkpcilidz:0d0855fd35c0a04db6b5318a5993e73da909a486b68c370aaf47aeb451f1a08c@ec2-54-167-168-52.compute-1.amazonaws.com:5432/dcr57ntb2nuke1', 
+const sequelize = new Sequelize('postgres://ynpiblkpcilidz:0d0855fd35c0a04db6b5318a5993e73da909a486b68c370aaf47aeb451f1a08c@ec2-54-167-168-52.compute-1.amazonaws.com:5432/dcr57ntb2nuke1',
 {
   ssl: true,
     dialectOptions: {
@@ -12,7 +12,7 @@ const sequelize = new Sequelize('postgres://ynpiblkpcilidz:0d0855fd35c0a04db6b53
     },
     logging: false
 }) // input heroku connection string
-//const sequelize = new Sequelize('postgres://MassimoBergamin@127.0.0.1:5432/RT1') 
+//const sequelize = new Sequelize('postgres://MassimoBergamin@127.0.0.1:5432/RT1')
 
 try {
   sequelize.authenticate().then(console.log('Connection has been established successfully.'));
@@ -287,7 +287,7 @@ Exercise.belongsTo(User, {
   onUpdate: 'CASCADE'
 });
 
-User.hasOne(Measurement);
+User.hasMany(Measurement);
 Measurement.belongsTo(User, {
   onDelete: 'CASCADE',
   onUpdate: 'CASCADE'
