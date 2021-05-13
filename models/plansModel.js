@@ -16,12 +16,17 @@ exports.postPlanModel = async (trainer_uid, client_uid, body) => {
 };
 
 exports.modifyPlanModel = async (plan_id, body) => {
-  const plan =  await Plan.update(body, {
+  const modified = await Plan.update(body, {
      where: {
        id: plan_id
      }
    });
-  return plan;
+  const modifiedPlan = await Plan.findOne({
+    where: {
+      id: plan_id
+    }
+  });
+  return modifiedPlan;
 };
 
 exports.getClientPlansModel = async (client_uid, start_date) => {
@@ -30,11 +35,16 @@ exports.getClientPlansModel = async (client_uid, start_date) => {
 };
 
 exports.addPlanNotesModel = async (plan_id, body) => {
-  const updatedPlanNotes = await Plan.update(body,
+  const modified = await Plan.update(body,
     {
     where: {
       id: plan_id
     }
   });
-  return updatedPlanNotes;
+  const modifiedPlan = await Plan.findOne({
+    where: {
+      id: plan_id
+    }
+  });
+  return modifiedPlan;
 };

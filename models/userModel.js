@@ -11,7 +11,8 @@ exports.postUserModel = async(body) => {
 
 exports.updateUserModel = async(uid, body) => {
   let modified = await User.update(body, { where: { user_uid: uid }});
-  return modified;
+  let updatedUser = await User.findOne({ where: { user_uid: uid } });
+  return updatedUser;
 }
 
 exports.getUserModel = async(uid, type) => {

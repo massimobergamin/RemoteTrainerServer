@@ -9,7 +9,8 @@ exports.postSessionModel = async(trainer_uid, client_uid, body) => {
 }
 
 exports.modifySessionModel = async(meeting_id, body) => {
-  let modifiedSession = await Session.update(body, { where: { meeting_id } });
+  let modified = await Session.update(body, { where: { meeting_id } });
+  let modifiedSession = await Session.findOne({ where: { meeting_id } });
   return modifiedSession;
 }
 
