@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { postUser, updateUser, getUser, postClient, getClients } = require('./controllers/userController');
+const { postUser, updateUser, getUser, postClient, getClients, postCode, getCode } = require('./controllers/userController');
 const { postSession, modifySession, getSessions, getSession } = require('./controllers/sessionsController');
 const { postPlan, modifyPlan, getClientPlans, addPlanNotes } = require('./controllers/plansController');
 const { getWorkouts, getExercises, postWorkout, postExercise, storeExercise } = require('./controllers/exercisesController');
@@ -10,6 +10,8 @@ router.put('/users/:uid', updateUser);
 router.get('/users/:uid-:type', getUser);
 router.post('/clients/:trainer_uid-:client_uid', postClient);
 router.get('/clients/:uid', getClients);
+router.post('/users/invite/:uid', postCode); // added
+router.get('/users/invite/:uid', getCode); // added
 
 // re: sessions
 router.post('/users/sessions/:trainer_uid-:client_uid', postSession);
