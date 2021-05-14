@@ -41,7 +41,9 @@ exports.postClientModel = async(trainer_uid, client_uid) => {
 }
 
 exports.getAllUsersModel = async () => {
-  const users = await Users.findAll();
+  console.log("I AM IN MODELS")
+  const users = await User.findAll();
+  console.log("ALL USERS", users)
   return users;
 }
 
