@@ -21,9 +21,9 @@ exports.getUserModel = async(uid, type) => {
   if (type === 'trainer')
     //user = await User.findOne({user_uid: uid, include: {model: Session}});
     user = await User.findOne({ where: { user_uid: uid }, include: Session });
-    if (!user) {
+    if (!user.id) {
       console.log("LOUISA's version")
-      user = await User.findOne({user_uid: uid, include: {model: Session}});
+      user = await User.findOne({where: {user_uid: uid}, include: {model: Session}});
     }
   else {
     user = await User.findOne({ where: { user_uid: uid }, include: Plan });
