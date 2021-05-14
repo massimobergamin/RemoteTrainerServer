@@ -17,9 +17,14 @@ exports.updateUserModel = async(uid, body) => {
 
 exports.getUserModel = async(uid, type) => {
   let user, trainerInfo;
-
+  console.log(type)
   if (type === 'trainer')
+    //user = await User.findOne({user_uid: uid, include: {model: Session}});
     user = await User.findOne({ where: { user_uid: uid }, include: Session });
+    if (!user) {
+      console.log("LOUISA's version")
+      user = await User.findOne({user_uid: uid, include: {model: Session}});
+    }
   else {
     user = await User.findOne({ where: { user_uid: uid }, include: Plan });
     trainerInfo = await TrainerToClient.findOne({ where: { client_uid: uid } });
