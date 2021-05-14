@@ -2,7 +2,10 @@ const { Workout, Exercise, User } = require('../db');
 const { Op } = require('sequelize');
 
 exports.getWorkoutsModel = async (trainer_uid) => {
-  let workout = await Workout.findAll({ where: {trainer_uid}, include: Exercise });
+  let workout = await Workout.findAll({
+    where: {trainer_uid},
+    include: {model:Exercise}
+  });
   return workout;
 };
 
