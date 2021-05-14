@@ -40,9 +40,16 @@ exports.postClientModel = async(trainer_uid, client_uid) => {
   return newRelationship;
 }
 
+exports.getAllUsersModel = async () => {
+  const users = await Users.findAll();
+  return users;
+}
+
 exports.getClientsModel = async(uid) => {
   let trainerClients = await TrainerToClient.findAll({ where: { trainer_uid: uid } });
+
   let uidArr = [];
+  let
   for (let i = 0; i < trainerClients.length; i++) {
     uidArr.push(trainerClients[i].dataValues.client_uid)
   }

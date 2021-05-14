@@ -1,11 +1,12 @@
 const router = require('express').Router();
-const { postUser, updateUser, getUser, postClient, getClients, postCode, getCode } = require('./controllers/userController');
+const { postUser, getAllUsers, updateUser, getUser, postClient, getClients, postCode, getCode } = require('./controllers/userController');
 const { postSession, modifySession, getSessions, getSession } = require('./controllers/sessionsController');
 const { postPlan, modifyPlan, getClientPlans, addPlanNotes } = require('./controllers/plansController');
 const { getWorkouts, getExercises, postWorkout, postExercise, storeExercise } = require('./controllers/exercisesController');
 
 // re: users
 router.post('/users', postUser);
+router.get('/getallusers', getAllUsers)
 router.put('/users/:uid', updateUser);
 router.get('/users/:uid-:type', getUser);
 router.post('/clients/:trainer_uid-:client_uid', postClient);
