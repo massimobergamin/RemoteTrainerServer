@@ -1,4 +1,4 @@
-const { postUserModel, updateUserModel, getUserModel, postClientModel, getClientsModel, postCodeModel, getCodeModel } = require('../models/userModel');
+const { postUserModel, getAllUsersModel, updateUserModel, getUserModel, postClientModel, getClientsModel, postCodeModel, getCodeModel } = require('../models/userModel');
 
 exports.postUser = async(req, res) => {
   try {
@@ -41,6 +41,15 @@ exports.getClients = async(req, res) => {
   try {
     let clients = await getClientsModel(req.params.uid);
     res.status(200).send(clients);
+  } catch (err) {
+    res.status(500).send(err);
+  }
+}
+
+exports.getAllUsers = async (req,res) => {
+  try {
+    let users = await getAllUsersModel();
+    res.status(200).send(users);
   } catch (err) {
     res.status(500).send(err);
   }
