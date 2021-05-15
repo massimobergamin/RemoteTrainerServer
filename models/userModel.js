@@ -41,30 +41,24 @@ exports.postClientModel = async(trainer_uid, client_uid) => {
 }
 
 exports.getAllUsersModel = async () => {
-  console.log("I AM IN MODELS")
   const users = await User.findAll();
-  console.log("ALL USERS", users)
   return users;
 }
 
 exports.getClientsModel = async(uid) => {
   let trainerClients = await TrainerToClient.findAll({ where: { trainer_uid: uid } });
+  console.log(trainerClients)
+  let uidArr = trainerClients.map((relationship) => relationship=relationship.dataValues.client_uid);
+  
+  let results = await Promise.all(uidArr.map(async (client) => {
+     let info = await User.findOne({
+          where: { user_uid: client},
+          include: {model:Plan}
+        })
+      return info.dataValues
+  }))
 
-  let uidArr = [];
-  let
-  for (let i = 0; i < trainerClients.length; i++) {
-    uidArr.push(trainerClients[i].dataValues.client_uid)
-  }
-  let clientInfoArr = [];
-
-  for (let i = 0; i < uidArr.length; i++) {
-    let user = await User.findOne({
-      where: { user_uid: uidArr[i] },
-      include: {model:Plan}
-    });
-    clientInfoArr.push(user);
-  }
-  return clientInfoArr;
+  return results;
 }
 
 exports.postCodeModel = async(uid, body) => {
