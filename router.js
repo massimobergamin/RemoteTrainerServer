@@ -13,7 +13,7 @@ router.post('/clients/:trainer_uid-:client_uid', postClient);
 router.get('/clients/:uid', getClients);
 router.post('/users/invite/:uid', postCode); // added
 router.get('/users/invite/:uid', getCode); // added
-router.get('/users/invite/:code', getTrainerByCode);
+router.get('/users/client/invite/:code', getTrainerByCode);
 
 // re: sessions
 router.post('/users/sessions/:trainer_uid-:client_uid', postSession);
