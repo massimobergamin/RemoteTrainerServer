@@ -22,14 +22,15 @@ exports.getUserModel = async(uid, type) => {
          where: {user_uid: uid},
          include:{model: Session} 
       });
-   }
-  else {
+   } else {
     user = await User.findOne({
       where: {user_uid: uid}, 
       include: {model: Plan}
     });
+    // console.log(user);
     trainerInfo = await TrainerToClient.findOne({ where: { client_uid: uid } });
-    user.dataValues.trainerInfo = trainerInfo.dataValues;
+    // console.log(trainerInfo);
+    user.dataValues.trainerInfo = trainerInfo ? trainerInfo.dataValues : {};
     user = user.dataValues;
   }
   return user;
