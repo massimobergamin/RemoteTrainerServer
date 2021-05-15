@@ -1,4 +1,4 @@
-const { postUserModel, getAllUsersModel, updateUserModel, getUserModel, postClientModel, getClientsModel, postCodeModel, getCodeModel } = require('../models/userModel');
+const { postUserModel, getAllUsersModel, updateUserModel, getUserModel, postClientModel, getClientsModel, postCodeModel, getCodeModel, getTrainerByCodeModel } = require('../models/userModel');
 
 exports.postUser = async(req, res) => {
   try {
@@ -68,6 +68,16 @@ exports.getCode = async(req, res) => {
   try {
     let code = await getCodeModel(req.params.uid);
     res.status(200).send(code);
+  } catch (err) {
+    res.status(500).send(err);
+  }
+}
+
+exports.getTrainerByCode = async(req, res) => {
+  try {
+    let trainer = await getTrainerByCodeModel(req.params.code);
+    console.log('getTrainerByCode Controller: ', trainer);
+    res.status(200).send(trainer);
   } catch (err) {
     res.status(500).send(err);
   }

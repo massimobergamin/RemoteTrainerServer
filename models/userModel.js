@@ -70,3 +70,10 @@ exports.getCodeModel = async(uid) => {
   let code = await Invite.findOne({ where: { trainer_uid: uid } });
   return code;
 }
+
+exports.getTrainerByCodeModel = async(code) => {
+  let trainer = await Invite.findOne({ where: { invite_code: code }});
+  console.log('getTrainerByCodeModel: ', trainer);
+  return trainer;
+}
+
