@@ -1,4 +1,4 @@
-const { Session, User } = require('../db');
+const { Session, User, Measurement } = require('../db');
 
 exports.postSessionModel = async(trainer_uid, client_uid, body) => {
   let trainer = await User.findOne({ where: { user_uid: trainer_uid } });
@@ -18,4 +18,16 @@ exports.getSessionsModel = async(type, uid) => {
   let allSessions = type === 'trainer' ? await Session.findAll({ where: { trainer_uid: uid } }) :
     await Session.findAll({ where: { client_uid: uid } });
   return allSessions;
+}
+
+exports.getFilteredSessionsModel = async (uid) => {
+  let sessions= await Session.findAll({
+    where: {
+      client_uid: uid,
+      
+    },
+    include: { model: User}
+  });
+  let filtered = sessions.filter((session)=> new Date(session.startDate) >= new Date());
+  return filtered;
 }
