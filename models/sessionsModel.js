@@ -37,6 +37,13 @@ exports.getFilteredSessionsModel = async (uid, type) => {
       include: { model: User}
     });
   }
-  let filtered = sessions.filter((session)=> new Date(session.startDate) >= new Date());
-  return filtered;
+  //console.log(sessions)
+  let filteredSessions = sessions.filter((session)=> {
+    return +new Date(session.dataValues.endDate) >= +new Date()
+  });
+  
+  let sorted = filteredSessions.sort((a,b) => {
+    return new Date(a.dataValues.startDate) - new Date(b.dataValues.startDate)
+  });
+  return sorted;
 }
