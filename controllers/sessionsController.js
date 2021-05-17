@@ -38,7 +38,7 @@ exports.getSession = async(req, res) => {
 
 exports.getFilteredSessions = async(req,res) => {
   try {
-    let filteredSessions = await getFilteredSessionsModel(req.params.uid);
+    let filteredSessions = await getFilteredSessionsModel(req.params.uid, req.params.type);
     res.status(200).send(filteredSessions)
   } catch(err) {
     res.status(500).send(err);

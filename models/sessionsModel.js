@@ -20,14 +20,23 @@ exports.getSessionsModel = async(type, uid) => {
   return allSessions;
 }
 
-exports.getFilteredSessionsModel = async (uid) => {
-  let sessions= await Session.findAll({
-    where: {
-      client_uid: uid,
-      
-    },
-    include: { model: User}
-  });
+exports.getFilteredSessionsModel = async (uid, type) => {
+  let sessions;
+  if (type === "trainer") {
+    sessions= await Session.findAll({
+      where: {
+        trainer_uid: uid,
+      },
+      include: { model: User}
+    });
+  } else {
+    sessions= await Session.findAll({
+      where: {
+        client_uid: uid,
+      },
+      include: { model: User}
+    });
+  }
   let filtered = sessions.filter((session)=> new Date(session.startDate) >= new Date());
   return filtered;
 }
