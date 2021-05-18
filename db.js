@@ -61,6 +61,9 @@ const User = sequelize.define('user', {
   birthday: { //changed from age to birthday
     type: DataTypes.DATEONLY,
   },
+  sex: {
+    type: DataTypes.STRING
+  }
 });
 
 const Invite = sequelize.define('invite', {
