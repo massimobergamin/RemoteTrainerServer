@@ -47,3 +47,8 @@ exports.getFilteredSessionsModel = async (uid, type) => {
   });
   return sorted;
 }
+
+exports.deleteSessionModel = async(meetingid) => {
+  const session = await Session.findOne({ where: { meeting_uid: meetingid } })
+  await session.destroy();
+}

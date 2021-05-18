@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const { postUser, getAllUsers, updateUser, getUser, postClient, getClients, postCode, getCode, getTrainerByCode } = require('./controllers/userController');
-const { postSession, getFilteredSessions, modifySession, getSessions, getSession } = require('./controllers/sessionsController');
+const { postSession, getFilteredSessions, modifySession, getSessions, getSession, deleteSession } = require('./controllers/sessionsController');
 const { postPlan, modifyPlan, getClientPlans, addPlanNotes } = require('./controllers/plansController');
 const { getWorkouts, getExercises, postWorkout, postExercise, storeExercise } = require('./controllers/exercisesController');
 
@@ -21,6 +21,7 @@ router.put('/users/sessions/:meeting_id', modifySession);
 router.get('/users/sessions/:type-:uid', getSessions);
 router.get('/users/sessions/:meeting_id', getSession);
 router.get('/users/sessions/filtered/:uid/:type', getFilteredSessions)
+router.delete('/users/sessions/:meeting_id', deleteSession);
 
 // re: plans
 router.post('/plans/:trainer_uid-:client_uid', postPlan);
