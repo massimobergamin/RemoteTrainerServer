@@ -33,8 +33,10 @@ io.on('connection', socket => {
         socket.emit("room full");
         return;
       }
+      console.log("SOCKET1", socket.id)
       users[roomID].push(socket.id);
     } else {
+      console.log("SOCKET2", socket.id )
       users[roomID] = [socket.id];
     }
     socketToRoom[socket.id] = roomID;
@@ -44,10 +46,12 @@ io.on('connection', socket => {
   });
 
   socket.on("sending signal", payload => {
+    console.log("SENDING SIGNAL")
     io.to(payload.userToSignal).emit('user joined', { signal: payload.signal, callerID: payload.callerID });
   });
 
   socket.on("returning signal", payload => {
+    console.log("RETURNING SIGNAL")
     io.to(payload.callerID).emit('receiving returned signal', { signal: payload.signal, id: socket.id });
   });
 
