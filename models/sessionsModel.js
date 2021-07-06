@@ -48,7 +48,7 @@ exports.getFilteredSessionsModel = async (uid, type) => {
   return sorted;
 }
 
-exports.deleteSessionModel = async(meetingid) => {
+exports.deleteSessionModel = async(meetingid, uid, type) => {
   await Session.destroy({
     where: {
       meeting_uid: meetingid
