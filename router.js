@@ -38,4 +38,4 @@ router.post('/exercises/custom/:trainer_uid', postExercise);
 // for us to store exercises into our DB
 router.post('/exercises/general', storeExercise);
 
-module.exports = router;
+module.exports = router
