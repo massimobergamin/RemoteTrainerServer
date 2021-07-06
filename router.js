@@ -21,7 +21,7 @@ router.put('/users/sessions/:meeting_id', modifySession);
 router.get('/users/sessions/:type-:uid', getSessions);
 router.get('/users/sessions/:meeting_id', getSession);
 router.get('/users/sessions/filtered/:uid/:type', getFilteredSessions)
-router.delete('/users/sessions/:meeting_id', deleteSession);
+router.delete('/users/sessions/:meeting_id/:uid/:type', deleteSession);
 
 // re: plans
 router.post('/plans/:trainer_uid-:client_uid', postPlan);

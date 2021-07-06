@@ -48,8 +48,8 @@ exports.getFilteredSessions = async(req,res) => {
 exports.deleteSession = async(req, res) => {
   try {
     console.log(req, "HEllo");
-    let session = await deleteSessionModel(req.params.meeting_id);
-    res.status(200).send(session);
+    let sessions = await deleteSessionModel(req.params.meeting_id, req.params.uid, req.params.type);
+    res.status(200).send(sessions);
   } catch (err) {
     console.log(err)
     res.status(500).send(err);
