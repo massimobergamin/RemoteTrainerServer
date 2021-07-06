@@ -41,7 +41,7 @@ exports.getFilteredSessionsModel = async (uid, type) => {
   let filteredSessions = sessions.filter((session)=> {
     return +new Date(session.dataValues.endDate) >= +new Date()
   });
-  
+
   let sorted = filteredSessions.sort((a,b) => {
     return new Date(a.dataValues.startDate) - new Date(b.dataValues.startDate)
   });
@@ -49,6 +49,11 @@ exports.getFilteredSessionsModel = async (uid, type) => {
 }
 
 exports.deleteSessionModel = async(meetingid) => {
-  const session = await Session.findOne({ where: { meeting_uid: meetingid } })
-  await session.destroy();
+  await Session.destroy({
+    where: {
+      meeting_uid: meetingid
+    }
+  });
+
+  return getFilteredSessionsModel(uid, type);
 }
