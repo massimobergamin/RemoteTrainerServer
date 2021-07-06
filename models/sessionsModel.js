@@ -37,7 +37,6 @@ exports.getFilteredSessionsModel = async (uid, type) => {
       include: { model: User}
     });
   }
-  //console.log(sessions)
   let filteredSessions = sessions.filter((session)=> {
     return +new Date(session.dataValues.endDate) >= +new Date()
   });
@@ -51,9 +50,9 @@ exports.getFilteredSessionsModel = async (uid, type) => {
 exports.deleteSessionModel = async(meetingid, uid, type) => {
   await Session.destroy({
     where: {
-      meeting_uid: meetingid
+      meeting_id: meetingid
     }
   });
 
-  return getFilteredSessionsModel(uid, type);
+  return exports.getFilteredSessionsModel(uid, type);
 }
