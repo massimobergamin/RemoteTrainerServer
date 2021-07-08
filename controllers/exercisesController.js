@@ -5,7 +5,6 @@ exports.getWorkouts = async (req, res) => {
     const workouts = await getWorkoutsModel(req.params.trainer_uid);
     res.status(200).send(workouts);
   } catch (error) {
-    console.log(error)
     res.status(500).send(error);
   }
 };
@@ -24,7 +23,6 @@ exports.postWorkout = async (req, res) => {
     const workouts = await postWorkoutModel(req.params.trainer_uid, req.body);
     res.status(200).send(workouts);
   } catch (error) {
-    console.log(error)
     res.status(500).send(error);
   }
 };

@@ -1,7 +1,8 @@
+require('dotenv').config();
+const DB_URI = process.env.DB_URI;
 const { Sequelize, DataTypes } = require('sequelize');
-// const sequelize = new Sequelize('postgres://pkxgtjwuztfiwc:d47be1eb7435e73c1d1b02177fa7ba64214a5f8766de8d07415def5f5f273fce@ec2-35-174-35-242.compute-1.amazonaws.com:5432/defckmt2cf9m5i') // input heroku connection string
 
-const sequelize = new Sequelize('postgres://lillixtpudxumc:8eb2655df0f8ea952d950bdc711b1cc15ce3f4385ea6b239a43cdaf0c7351434@ec2-54-152-185-191.compute-1.amazonaws.com:5432/dc6l598rgfb95',
+const sequelize = new Sequelize(DB_URI,
 {
   ssl: true,
     dialectOptions: {
@@ -11,8 +12,7 @@ const sequelize = new Sequelize('postgres://lillixtpudxumc:8eb2655df0f8ea952d950
       }
     },
     logging: false
-}) // input heroku connection string
-//const sequelize = new Sequelize('postgres://MassimoBergamin@127.0.0.1:5432/RT1')
+})
 
 try {
   sequelize.authenticate().then(console.log('Connection has been established successfully.'));
@@ -58,7 +58,7 @@ const User = sequelize.define('user', {
     type: DataTypes.STRING,
     allowNull: false
   },
-  birthday: { //changed from age to birthday
+  birthday: {
     type: DataTypes.DATEONLY,
   },
   sex: {
@@ -76,10 +76,6 @@ const Invite = sequelize.define('invite', {
     allowNull: false
   },
 });
-
-// const Workout_Exercise = sequelize.define('workout_exercise', {
-
-// });
 
 const Workout = sequelize.define('workout', {
   trainer_uid: {
@@ -121,11 +117,11 @@ const Exercise = sequelize.define('exercise', {
 });
 
 const Measurement = sequelize.define('measurement', {
-  client_uid: { // deleted user_uid and added this
+  client_uid: {
     type: DataTypes.STRING,
     allowNull: false
   },
-  trainer_uid: { // added
+  trainer_uid: {
     type: DataTypes.STRING,
     allowNull: false
   },
@@ -161,21 +157,6 @@ const Measurement = sequelize.define('measurement', {
     type: DataTypes.INTEGER
   },
 });
-
-// const ClientPlan = sequelize.define('Client_Plan', {
-//   client_uid: {
-//     type: DataTypes.STRING,
-//     allowNull: false
-//   },
-//   trainer_uid: {
-//     type: DataTypes.STRING,
-//     allowNull: false
-//   },
-//   plan_id: {
-//     type: DataTypes.INTEGER,
-//     allowNull: false
-//   },
-// });
 
 const Session = sequelize.define('session', {
   meeting_id: {
@@ -214,7 +195,7 @@ const Plan = sequelize.define('plan', {
     type: DataTypes.STRING,
     allowNull: false
   },
-  client_uid: { // added
+  client_uid: {
     type: DataTypes.STRING,
     allowNull: false
   },
@@ -237,7 +218,7 @@ const Tracker = sequelize.define('tracker', {
     type: DataTypes.STRING,
     allowNull: false
   },
-  trainer_uid: { // added
+  trainer_uid: {
     type: DataTypes.STRING,
     allowNull: false
   },
@@ -310,4 +291,4 @@ Tracker.belongsTo(User, {
 
 sequelize.sync();
 
-module.exports = { User, Invite, Workout, Measurement, Exercise, Session, Plan, Tracker, TrainerToClient }
+module.exports = { User, Invite, Workout, Measurement, Exercise, Session, Plan, Tracker, TrainerToClient };

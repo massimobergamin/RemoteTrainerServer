@@ -23,7 +23,6 @@ exports.getClientPlans = async (req, res) => {
     const clientPlans = await getClientPlansModel(req.params.client_uid, req.params.start_date);
     res.status(200).send(clientPlans);
   } catch (error) {
-    console.log(error);
     res.status(500).send(error);
   }
 };

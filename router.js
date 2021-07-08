@@ -11,8 +11,8 @@ router.put('/users/:uid', updateUser);
 router.get('/users/:uid-:type', getUser);
 router.post('/clients/:trainer_uid-:client_uid', postClient);
 router.get('/clients/:uid', getClients);
-router.post('/users/invite/:uid', postCode); // added
-router.get('/users/invite/:uid', getCode); // added
+router.post('/users/invite/:uid', postCode);
+router.get('/users/invite/:uid', getCode);
 router.get('/users/client/invite/:code', getTrainerByCode);
 
 // re: sessions
@@ -38,4 +38,4 @@ router.post('/exercises/custom/:trainer_uid', postExercise);
 // for us to store exercises into our DB
 router.post('/exercises/general', storeExercise);
 
-module.exports = router
+module.exports = router;
