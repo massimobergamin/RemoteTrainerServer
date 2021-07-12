@@ -11,7 +11,6 @@ const peerServer = ExpressPeerServer(server,
         path: '/'
     }
 );
-const { Session, User } = require('./db');
 
 app.use(cors());
 app.use(express.json());
@@ -19,7 +18,7 @@ app.use(router);
 app.use('/peerjs', peerServer);
 
 peerServer.on('connection', peer => {
-    console.log("Peer connected", peer.id)
+  console.log("Peer connected", peer.id);
 });
 
 const users = {};
@@ -33,10 +32,8 @@ io.on('connection', socket => {
         socket.emit("room full");
         return;
       }
-      console.log("SOCKET1", socket.id)
       users[roomID].push(socket.id);
     } else {
-      console.log("SOCKET2", socket.id )
       users[roomID] = [socket.id];
     }
     socketToRoom[socket.id] = roomID;
@@ -46,17 +43,14 @@ io.on('connection', socket => {
   });
 
   socket.on("sending signal", payload => {
-    console.log("SENDING SIGNAL")
     io.to(payload.userToSignal).emit('user joined', { signal: payload.signal, callerID: payload.callerID });
   });
 
   socket.on("returning signal", payload => {
-    console.log("RETURNING SIGNAL")
     io.to(payload.callerID).emit('receiving returned signal', { signal: payload.signal, id: socket.id });
   });
 
   socket.on('endCall', () => {
-    console.log("DISCONNECTING")
     const roomID = socketToRoom[socket.id];
     let room = users[roomID];
     if (room) {
@@ -68,4 +62,3 @@ io.on('connection', socket => {
 });
 
 server.listen(port, () => console.log(`Server listening on port ${port}...`));
-// app.listen(port, () => console.log(`Server listening on port ${port}...`));
