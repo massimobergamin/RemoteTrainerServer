@@ -20,7 +20,9 @@ Clients can:
 ## Tech Stack
 
 Front End: React with NextJS, Firebase, Google Workbox
+
 Back End: Express, PostgreSQL with Sequelize
+
 Other: Peer-to-Peer (SimplePeer),  WebSockets (Socket.io)
 
 ## Contributors
