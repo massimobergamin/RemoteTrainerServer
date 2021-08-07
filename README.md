@@ -21,7 +21,7 @@ Clients can:
 
 ## Tech Stack
 
-Front End: React with NextJS, Firebase, Google Workbox
+Front End: React with NextJS, Redux, Firebase, Google Workbox
 
 Back End: Express, PostgreSQL with Sequelize
 
